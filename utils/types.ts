@@ -3,5 +3,4 @@ export interface Flower {
   name: string;
   description: string;
   price: string;
-  imageUri: string | null;
 }
