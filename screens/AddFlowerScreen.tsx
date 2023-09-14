@@ -1,13 +1,17 @@
-import React, {useState} from 'react';
-import {View, Alert} from 'react-native';
-import CustomButton from '../components/common/Button';
-import CustomTextInput from '../components/common/TextInput';
+import React, { useRef, useState } from 'react';
+import { Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Button, Input, Layout, Text } from '@ui-kitten/components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddFlowerScreen: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [price, setPrice] = useState<string>('');
+
+   // References for the input fields
+   const nameRef = useRef<Input>(null);
+   const descriptionRef = useRef<Input>(null);
+   const priceRef = useRef<Input>(null);
 
   const storeFlowerData = async (flowerData: object) => {
     try {
@@ -30,37 +34,47 @@ const AddFlowerScreen: React.FC = () => {
       };
       storeFlowerData(flowerData);
       Alert.alert('Success', 'Flower details saved successfully!');
+      // Blur the input fields
+      nameRef.current && nameRef.current.blur();
+      descriptionRef.current && descriptionRef.current.blur();
+      priceRef.current && priceRef.current.blur();
     } else {
       Alert.alert('Error', 'Please fill in all fields');
     }
   };
 
   return (
-    <View style={{padding: 20, backgroundColor: 'white', flex: 1}}>
-      <CustomTextInput
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <Layout style={{ padding: 20, flex: 1 }}>
+      <Input
+        ref={nameRef} 
         placeholder="Flower Name"
         value={name}
         onChangeText={setName}
       />
-      <CustomTextInput
+      <Input
+        ref={descriptionRef}
         placeholder="Description"
         value={description}
         onChangeText={setDescription}
+        style={{ marginVertical: 10 }}
       />
-      <CustomTextInput
+      <Input
+        ref={descriptionRef}
         placeholder="Price"
         value={price}
         onChangeText={text => {
-          // Use a regex to check if the text is only numbers (with or without decimals)
           if (text === '' || /^[0-9]+(\.[0-9]{0,2})?$/.test(text)) {
             setPrice(text);
           }
         }}
         keyboardType="number-pad"
       />
-
-      <CustomButton title="Add Flower" onPress={addFlower} />
-    </View>
+      <Button style={{ marginVertical: 20 }} onPress={addFlower}>
+        Add Flower
+      </Button>
+    </Layout>
+    </TouchableWithoutFeedback>
   );
 };
 
