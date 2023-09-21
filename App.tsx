@@ -7,6 +7,7 @@ import * as eva from '@eva-design/eva';
 import { ApplicationProvider, Icon, IconRegistry } from '@ui-kitten/components';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import StoreScreen from './screens/StoreScreen';
 
 enableScreens();
 
@@ -14,6 +15,7 @@ const Tab = createBottomTabNavigator();
 
 const HomeIcon = (props) => <Icon {...props} name="home-outline" width={24} height={24} />;
 const AddFlowerIcon = (props) => <Icon {...props} name="plus-outline" width={24} height={24} />;
+const StoreIcon = (props) => <Icon {...props} name="shopping-bag-outline" width={24} height={24} />;
 
 const App: React.FC = () => {
   return (
@@ -30,12 +32,15 @@ const App: React.FC = () => {
                 return <HomeIcon fill={color} />;
               } else if (route.name === 'Add') {
                 return <AddFlowerIcon fill={color} />;
+              } else if (route.name === 'Store') {
+                return <StoreIcon fill={color} />;
               }
             },
           })}
         >
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Add" component={AddFlowerScreen} />
+          <Tab.Screen name="Store" component={StoreScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     </ApplicationProvider>

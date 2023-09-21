@@ -4,8 +4,8 @@ import { Flower } from "../../../../utils/types";
 import { calculateTotalPrice } from "../calculateTotalPriceUtils";
 
 describe('calculateTotalPrice', () => {
-    const mockFlower1: Flower = { id: '1', name: 'Rose',  price: '5.50', description: '' };
-    const mockFlower2: Flower = { id: '2', name: 'Tulip',  price: '3.75', description: '' };
+    const mockFlower1: Flower = { id: '1', name: 'Rose',  price: '5.50' };
+    const mockFlower2: Flower = { id: '2', name: 'Tulip',  price: '3.75'};
 
     it('should calculate the total price for multiple flowers', () => {
         const selectedFlowers = [

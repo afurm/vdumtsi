@@ -18,5 +18,5 @@ export const useFlowerStorage = () => {
         setFlowers(updatedFlowers);
     };
 
-    return { flowers, fetchFlowersFromStorage, deleteFlower };
+    return { flowers, fetchFlowersFromStorage, deleteFlower, setFlowers };
 };
