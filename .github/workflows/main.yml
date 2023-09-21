@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     name: Build and Test
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - name: Checkout repository
@@ -25,6 +25,13 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Install CocoaPods dependencies
+      run: |
+        cd ios
+        pod install
+
+    - name: Build iOS app
+      run: npx react-native run-ios --simulator="iPhone 12"
+
     - name: Run tests
       run: npm test
-
