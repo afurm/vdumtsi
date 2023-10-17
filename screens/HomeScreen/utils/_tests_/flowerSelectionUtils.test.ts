@@ -3,8 +3,8 @@
 import { Flower } from "../../../../utils/types";
 import { addFlower, removeFlower, getFlowerQuantity } from "../flowerSelectionUtils";
 
-const mockFlower1: Flower = { id: '1', name: 'Rose', price: '1', description: 'null' };
-const mockFlower2: Flower = { id: '2', name: 'Tulip', price: '2',description: 'null' };
+const mockFlower1: Flower = { id: '1', name: 'Rose', price: '1' };
+const mockFlower2: Flower = { id: '2', name: 'Tulip', price: '2'};
 
 describe('flowerSelectionUtils', () => {
   describe('addFlower', () => {

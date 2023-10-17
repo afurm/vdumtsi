@@ -5,11 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddFlowerScreen: React.FC = () => {
   const [name, setName] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
   const [price, setPrice] = useState<string>('');
 
   const nameRef = useRef<Input>(null);
-  const descriptionRef = useRef<Input>(null);
   const priceRef = useRef<Input>(null);
 
   const storeFlowerData = async (flowerData: object) => {
@@ -20,7 +18,6 @@ const AddFlowerScreen: React.FC = () => {
       await AsyncStorage.setItem('flowerData', JSON.stringify(prevData));
       Alert.alert('Success', 'Flower details saved successfully!');
       setName('');
-      setDescription('');
       setPrice('');
       nameRef.current && nameRef.current.focus();
     } catch (error) {
@@ -33,7 +30,6 @@ const AddFlowerScreen: React.FC = () => {
     if (name && price) {
       const flowerData = {
         name,
-        description,
         price,
         id: Math.floor(Date.now() / 1000).toString(),
       };
@@ -52,17 +48,9 @@ const AddFlowerScreen: React.FC = () => {
             placeholder="Enter flower name"
             value={name}
             onChangeText={setName}
-            onSubmitEditing={() => descriptionRef.current && descriptionRef.current.focus()}
-            returnKeyType="next"
-          />
-          <Input
-            ref={descriptionRef}
-            placeholder="Enter description"
-            value={description}
-            onChangeText={setDescription}
             onSubmitEditing={() => priceRef.current && priceRef.current.focus()}
             returnKeyType="next"
-            style={{ marginVertical: 10 }}
+            style={{ marginBottom: 10 }}
           />
           <Input
             ref={priceRef}
