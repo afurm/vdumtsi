@@ -6,6 +6,7 @@ import { Button, Text, Layout, Divider, Icon, Input } from '@ui-kitten/component
 import { useFlowerSelection } from './hooks/useFlowerSelection';
 import { useFlowerStorage } from './hooks/useFlowerStorage';
 import { useTotalPrice } from './hooks/useTotalPrice';
+import { Modal, Card } from '@ui-kitten/components';
 import { Flower } from '../../utils/types';
 
 type Props = {
@@ -18,6 +19,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const calculateTotalPrice = useTotalPrice(selectedFlowers);
   const [searchValue, setSearchValue] = useState('')
   const [filteredFlowers, setFilteredFlowers] = useState<Flower[]>([]);
+  const [detailsVisible, setDetailsVisible] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -52,9 +54,30 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       <Input placeholder='search' value={searchValue}
              onChangeText={nextValue => setSearchValue(nextValue)}
              style={{marginBottom: 10}}/>
+      <View style={styles.totalPriceContainer}>
       <Text category="h5" style={styles.totalPriceText}>
         Total Price: ${calculateTotalPrice}
       </Text>
+      <Button onPress={() => setDetailsVisible(true)}>
+        Details
+      </Button>
+    </View>
+
+    <Modal
+      visible={detailsVisible}
+      backdropStyle={styles.backdrop}
+      onBackdropPress={() => setDetailsVisible(false)}>
+      <Card  disabled={true}>
+        {selectedFlowers.map((flower, index) => (
+          <Text style={ { marginBottom: 10 }} key={index}>
+            {flower.flower.name} x {flower.quantity} = ${Number(flower.flower.price) * flower.quantity}
+          </Text>
+        ))}
+        <Button onPress={() => setDetailsVisible(false)}>
+          Close
+        </Button>
+      </Card>
+    </Modal>
       <FlatList
         data={filteredFlowers}
         keyExtractor={item => item.id}
@@ -107,6 +130,15 @@ const styles = StyleSheet.create({
   },
   totalPriceText: {
     marginBottom: 15,
+  },
+  totalPriceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+  },
+  backdrop: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });
 
